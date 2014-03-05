@@ -29,6 +29,7 @@ Development files for %{name}.
 
 %build
 sed -i -e '/gtkdocize/d' autogen.sh
+sed -i -e 's/GTK_DOC_CHECK.*//' configure.ac
 echo "EXTRA_DIST = missing-gtk-doc" > docs/gtk-doc.make
 export NOCONFIGURE=1
 %autogen
