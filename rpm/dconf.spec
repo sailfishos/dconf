@@ -28,6 +28,8 @@ Development files for %{name}.
 %setup -q -n %{name}-%{version}/%{name}
 
 %build
+sed -i -e '/gtkdocize/d' autogen.sh
+echo "EXTRA_DIST = missing-gtk-doc" > docs/gtk-doc.make
 NOCONFIGURE=1 %autogen
 %configure \
     --enable-man=no \
