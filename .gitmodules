@@ -1,0 +1,3 @@
+[submodule "dconf"]
+	path = dconf
+	url = git://git.gnome.org/dconf
