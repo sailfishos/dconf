@@ -11,6 +11,8 @@ Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(glib-2.0) >= 2.36.0
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  intltool
+# This is needed because gdbus-codegen is a pythin script and glib2-devel does not depend on it
+BuildRequires:  python
 
 %description
 DConf is a low-level key/value database designed for storing desktop
