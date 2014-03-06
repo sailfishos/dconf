@@ -8,6 +8,7 @@ URL:        https://download.gnome.org/sources/dconf/
 Source0:    https://download.gnome.org/sources/dconf/0.18/%{name}-%{version}.tar.xz
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
+Requires:       glib2 >= 2.36.0
 BuildRequires:  pkgconfig(glib-2.0) >= 2.36.0
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  intltool
