@@ -6,6 +6,7 @@ Group:      System Environment/Base
 License:    LGPLv2.1+
 URL:        https://download.gnome.org/sources/dconf/
 Source0:    https://download.gnome.org/sources/dconf/0.18/%{name}-%{version}.tar.xz
+Source1:    user
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Requires:       glib2 >= 2.36.0
@@ -48,9 +49,13 @@ rm -rf %{buildroot}
 
 %make_install
 
+mkdir -p %{buildroot}/%{_sysconfdir}/dconf/profile/
+cp %SOURCE1 %{buildroot}/%{_sysconfdir}/dconf/profile/
+mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/system.d/
 %post
 /sbin/ldconfig
 /usr/bin/gio-querymodules /usr/lib/gio/modules/
+/usr/bin/dconf update
 
 %postun
 /sbin/ldconfig
@@ -64,6 +69,8 @@ rm -rf %{buildroot}
 %{_libdir}/libdconf.so.*
 %{_libexecdir}/dconf-service
 %{_datadir}/dbus-1/services/*
+%{_sysconfdir}/dconf/profile/user
+%{_sysconfdir}/dconf/db/system.d/
 
 %files devel
 %defattr(-,root,root,-)
