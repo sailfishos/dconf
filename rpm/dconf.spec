@@ -7,13 +7,16 @@ License:    LGPLv2.1+
 URL:        https://download.gnome.org/sources/dconf/
 Source0:    https://download.gnome.org/sources/dconf/0.18/%{name}-%{version}.tar.xz
 Source1:    user
+Source2:    dconf-update
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
+Requires:       oneshot
 Requires:       glib2 >= 2.36.0
 BuildRequires:  pkgconfig(glib-2.0) >= 2.36.0
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  intltool
 BuildRequires:  vala-devel
+BuildRequires:  oneshot
 
 %description
 DConf is a low-level key/value database designed for storing desktop
@@ -52,10 +55,15 @@ rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_sysconfdir}/dconf/profile/
 cp %SOURCE1 %{buildroot}/%{_sysconfdir}/dconf/profile/
 mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/system.d/
+mkdir -p %{buildroot}/%{_oneshotdir}
+cp -a %SOURCE2 %{buildroot}/%{_oneshotdir}
+# Needed for ghosting
+touch %{buildroot}/%{_sysconfdir}/dconf/db/system
+
 %post
 /sbin/ldconfig
 /usr/bin/gio-querymodules /usr/lib/gio/modules/
-/usr/bin/dconf update
+%{_bindir}/add-oneshot dconf-update
 
 %postun
 /sbin/ldconfig
@@ -71,6 +79,8 @@ mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/system.d/
 %{_datadir}/dbus-1/services/*
 %{_sysconfdir}/dconf/profile/user
 %{_sysconfdir}/dconf/db/system.d/
+%ghost %{_sysconfdir}/dconf/db/system
+%{_oneshotdir}/dconf-update
 
 %files devel
 %defattr(-,root,root,-)
