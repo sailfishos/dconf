@@ -85,7 +85,7 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
 %ghost %{_sysconfdir}/dconf/db/nemo
 %{_sysconfdir}/dconf/db/vendor.d/
 %ghost %{_sysconfdir}/dconf/db/vendor
-%{_oneshotdir}/dconf-update
+%attr(755, root, root) %{_oneshotdir}/dconf-update
 
 %files devel
 %defattr(-,root,root,-)
