@@ -54,11 +54,14 @@ rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/%{_sysconfdir}/dconf/profile/
 cp %SOURCE1 %{buildroot}/%{_sysconfdir}/dconf/profile/
-mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/system.d/
+mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/nemo.d/
+mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/vendor.d/
 mkdir -p %{buildroot}/%{_oneshotdir}
 cp -a %SOURCE2 %{buildroot}/%{_oneshotdir}
+
 # Needed for ghosting
-touch %{buildroot}/%{_sysconfdir}/dconf/db/system
+touch %{buildroot}/%{_sysconfdir}/dconf/db/nemo
+touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
 
 %post
 /sbin/ldconfig
@@ -78,8 +81,10 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/system
 %{_libexecdir}/dconf-service
 %{_datadir}/dbus-1/services/*
 %{_sysconfdir}/dconf/profile/user
-%{_sysconfdir}/dconf/db/system.d/
-%ghost %{_sysconfdir}/dconf/db/system
+%{_sysconfdir}/dconf/db/nemo.d/
+%ghost %{_sysconfdir}/dconf/db/nemo
+%{_sysconfdir}/dconf/db/vendor.d/
+%ghost %{_sysconfdir}/dconf/db/vendor
 %{_oneshotdir}/dconf-update
 
 %files devel
