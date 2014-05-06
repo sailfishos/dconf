@@ -243,9 +243,9 @@ main(int argc, char *argv[]) {
     GError *err = NULL;
     dconf_client_change_sync(*dconf, *set, NULL, NULL, &err);
     if (err) {
-        std::cerr << "Error saving dconf changeset" << std::endl;
-        g_error_free(err);
-        return 1;
+      std::cerr << "Error saving dconf changeset :" << err->message << std::endl;
+      g_error_free(err);
+      return 1;
     }
 
     return 0;
