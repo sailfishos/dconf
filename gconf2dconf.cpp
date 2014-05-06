@@ -12,6 +12,9 @@
 extern "C" {
 #include <dconf.h>
 };
+#include <ctime>
+
+#define MIGRATION_KEY "/dconf/migration_timestamp"
 
 static GVariant *convert_list(const GConfValue *value);
 
@@ -226,6 +229,25 @@ main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Check if we have completed the migration previously
+    GVariant *var = dconf_client_read (*dconf, MIGRATION_KEY);
+    if (var) {
+      // We don't really care about the value.
+      g_variant_unref (var);
+      std::cerr << "migration has been completed previously" << std::endl;
+      return 0;
+    }
+
+    // mark in the database that we are done with the migration
+    GError *err = NULL;
+    var = g_variant_new_int64 (time(NULL));
+    if (!dconf_client_write_sync (*dconf, MIGRATION_KEY, var, NULL, NULL, &err)) {
+      // We are doomed but we will go on :(
+      std::cerr << "Failed to store key " << MIGRATION_KEY << " :" << err->message << std::endl;
+      g_error_free(err);
+      err = NULL;
+    }
+
     std::vector<GObjectWrapper<GConfEntry> > keys;
     bool have_all_keys = get_all_keys(*gconf, keys, "/");
     if (!have_all_keys && keys.size() == 0) {
@@ -240,7 +262,6 @@ main(int argc, char *argv[]) {
 
     keys.clear();
 
-    GError *err = NULL;
     dconf_client_change_sync(*dconf, *set, NULL, NULL, &err);
     if (err) {
       std::cerr << "Error saving dconf changeset :" << err->message << std::endl;
