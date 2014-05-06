@@ -50,7 +50,7 @@ export NOCONFIGURE=1
 
 make %{?jobs:-j%jobs}
 
-g++ -o gconf2dconf %SOURCE4 `pkg-config --cflags --libs gconf-2.0 glib-2.0` -I. -Iclient -Lclient -ldconf
+g++ -o gconf2dconf %SOURCE4 `pkg-config --cflags --libs gconf-2.0 gobject-2.0` -I. -Iclient -Lclient -ldconf
 
 %install
 rm -rf %{buildroot}

@@ -8,7 +8,8 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include <boost/algorithm/string.hpp>
+#include <cstring>
+
 extern "C" {
 #include <dconf.h>
 };
