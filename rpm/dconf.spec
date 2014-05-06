@@ -8,12 +8,15 @@ URL:        https://download.gnome.org/sources/dconf/
 Source0:    https://download.gnome.org/sources/dconf/0.18/%{name}-%{version}.tar.xz
 Source1:    user
 Source2:    dconf-update
+Source3:    dconf-migrate
+Source4:    gconf2dconf.cpp
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Requires:       oneshot
 Requires:       glib2 >= 2.36.0
 BuildRequires:  pkgconfig(glib-2.0) >= 2.36.0
 BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  intltool
 BuildRequires:  vala-devel
 BuildRequires:  oneshot
@@ -47,6 +50,8 @@ export NOCONFIGURE=1
 
 make %{?jobs:-j%jobs}
 
+g++ -o gconf2dconf %SOURCE4 `pkg-config --cflags --libs gconf-2.0 glib-2.0` -I. -Iclient -Lclient -ldconf
+
 %install
 rm -rf %{buildroot}
 
@@ -58,6 +63,8 @@ mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/nemo.d/
 mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/vendor.d/
 mkdir -p %{buildroot}/%{_oneshotdir}
 cp -a %SOURCE2 %{buildroot}/%{_oneshotdir}
+cp -a %SOURCE3 %{buildroot}/%{_oneshotdir}
+cp -a gconf2dconf %{buildroot}/%{_bindir}
 
 # Needed for ghosting
 touch %{buildroot}/%{_sysconfdir}/dconf/db/nemo
@@ -67,6 +74,7 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
 /sbin/ldconfig
 /usr/bin/gio-querymodules /usr/lib/gio/modules/
 %{_bindir}/add-oneshot dconf-update
+%{_bindir}/add-oneshot --user dconf-migrate
 
 %postun
 /sbin/ldconfig
@@ -75,6 +83,7 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
 %files
 %defattr(-,root,root,-)
 %{_bindir}/dconf
+%{_bindir}/gconf2dconf
 %{_libdir}/gio/modules/libdconfsettings.so
 %{_libdir}/libdconf-dbus-*.so.*
 %{_libdir}/libdconf.so.*
@@ -86,6 +95,7 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
 %{_sysconfdir}/dconf/db/vendor.d/
 %ghost %{_sysconfdir}/dconf/db/vendor
 %attr(755, root, root) %{_oneshotdir}/dconf-update
+%attr(755, root, root) %{_oneshotdir}/dconf-migrate
 
 %files devel
 %defattr(-,root,root,-)
