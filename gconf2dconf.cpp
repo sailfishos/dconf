@@ -14,6 +14,7 @@ extern "C" {
 };
 #include <ctime>
 
+// Key can be reset via "dconf reset /dconf/migration_timestamp"
 #define MIGRATION_KEY "/dconf/migration_timestamp"
 
 static GVariant *convert_list(const GConfValue *value);
