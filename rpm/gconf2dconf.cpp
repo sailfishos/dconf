@@ -145,12 +145,14 @@ get_all_keys(GConfClient *client, std::vector<GObjectWrapper<GConfEntry> >& keys
   bool ret = true;
   while (entry) {
     gchar *path = reinterpret_cast<gchar *>(entry->data);
-    // We are not interested in schemas
-    if (strcmp(path, "/schemas")) {
-      if (!get_all_keys(client, keys, path, locked_keys)) {
-	// We will store the value and return it but we will not stop processing
-	// and hope we will get a partial migration.
-	ret = false;
+    if (path) {
+      // We are not interested in schemas
+      if (strcmp(path, "/schemas")) {
+	if (!get_all_keys(client, keys, path, locked_keys)) {
+	  // We will store the value and return it but we will not stop processing
+	  // and hope we will get a partial migration.
+	  ret = false;
+	}
       }
     }
 
