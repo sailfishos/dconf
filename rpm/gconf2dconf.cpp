@@ -266,13 +266,15 @@ get_locked_keys () {
 
     struct dirent *ent;
     while ((ent = readdir(d)) != 0) {
+      std::string path;
       try {
 	if (ent->d_name[0] != '.') {
-	  std::string path = dirs[x];
+	  path = dirs[x];
 	  path += ent->d_name;
 	  get_locked_keys (path, locked_keys);
 	}
       } catch (...) {
+	std::cerr << "Failed to read locked keys from " << path << std::endl;
 	continue;
       }
     }
