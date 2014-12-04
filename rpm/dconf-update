@@ -1,7 +1,10 @@
 #!/bin/sh
 
-if [ -z "$MIC_RUN" ]; then
-    /usr/bin/dconf update
-else
+/usr/bin/dconf update
+
+if [ "$MIC_RUN" ]; then
+    # exit with error to run again on first boot, just in case
+    # ideally it won't do anything at that time because none of
+    # key file mtimes have changed
     exit 1
 fi
