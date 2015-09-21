@@ -61,6 +61,7 @@ mkdir -p %{buildroot}/%{_sysconfdir}/dconf/profile/
 cp %SOURCE1 %{buildroot}/%{_sysconfdir}/dconf/profile/
 mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/nemo.d/
 mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/vendor.d/
+mkdir -p %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant.d/
 mkdir -p %{buildroot}/%{_oneshotdir}
 cp -a %SOURCE2 %{buildroot}/%{_oneshotdir}
 cp -a %SOURCE3 %{buildroot}/%{_oneshotdir}
@@ -69,6 +70,7 @@ cp -a gconf2dconf %{buildroot}/%{_bindir}
 # Needed for ghosting
 touch %{buildroot}/%{_sysconfdir}/dconf/db/nemo
 touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
+touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 
 %post
 /sbin/ldconfig
@@ -94,6 +96,8 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor
 %ghost %{_sysconfdir}/dconf/db/nemo
 %{_sysconfdir}/dconf/db/vendor.d/
 %ghost %{_sysconfdir}/dconf/db/vendor
+%{_sysconfdir}/dconf/db/vendor-variant.d/
+%ghost %{_sysconfdir}/dconf/db/vendor-variant
 %attr(755, root, root) %{_oneshotdir}/dconf-update
 %attr(755, root, root) %{_oneshotdir}/dconf-migrate
 
