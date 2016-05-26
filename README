@@ -20,12 +20,3 @@ Adding app specific defaults:
     - copy it to /etc/dconf/db/nemo.d/<package-name>.txt
     - call dconf-update via a oneshot (%{_bindir}/add-oneshot dconf-update) in %post.
 
-GConf migration:
-================
-This will happen when dconf gets installed during the next boot.
-Migration is triggered by a oneshot script (dconf-migrate)
-dconf-migrate calles gconf2dconf binary which does the actual migration
-Migration will be attempted _ONLY ONCE_ even if it fails.
-gconf2dconf will set a dconf key (/dconf/migration_timestamp)
-
-"dconf unset /dconf/migration_timestamp" can be used to unset the key

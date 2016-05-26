@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if [ -z "$MIC_RUN" ]; then
-    /usr/bin/gconf2dconf
-else
-    exit 1
-fi
