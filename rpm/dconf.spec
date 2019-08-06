@@ -3,7 +3,7 @@ Summary:    simple configuration storage system
 Version:    0.28.0
 Release:    1
 Group:      System Environment/Base
-License:    LGPLv2.1+
+License:    LGPLv2+
 URL:        https://download.gnome.org/sources/dconf/
 Source0:    https://download.gnome.org/sources/dconf/0.28/%{name}-%{version}.tar.xz
 Source1:    user
