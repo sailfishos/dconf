@@ -57,12 +57,10 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 
 %post
 /sbin/ldconfig || :
-/usr/bin/gio-querymodules /usr/lib/gio/modules/ || :
 %{_bindir}/add-oneshot dconf-update || :
 
 %postun
 /sbin/ldconfig || :
-/usr/bin/gio-querymodules /usr/lib/gio/modules/ || :
 
 %files
 %defattr(-,root,root,-)
