@@ -1,21 +1,19 @@
 Name:       dconf
 Summary:    simple configuration storage system
-Version:    0.28.0
+Version:    0.34.0
 Release:    1
-Group:      System Environment/Base
 License:    LGPLv2+
 URL:        https://download.gnome.org/sources/dconf/
-Source0:    https://download.gnome.org/sources/dconf/0.28/%{name}-%{version}.tar.xz
+Source0:    %{name}-%{version}.tar.xz
 Source1:    user
 Source2:    dconf-update
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Requires:       oneshot
-Requires:       glib2 >= 2.36.0
-BuildRequires:  pkgconfig(glib-2.0) >= 2.36.0
+Requires:       glib2 >= 2.44.0
+BuildRequires:  pkgconfig(glib-2.0) >= 2.44.0
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  intltool
-BuildRequires:  vala-devel
 BuildRequires:  oneshot
 BuildRequires:  meson
 Obsoletes: gconf
@@ -26,17 +24,20 @@ environment settings.
 
 %package devel
 Summary:    Development files for %{name}
-Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
 
 %description devel
 Development files for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}/%{name}
+%autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
-%meson -Denable-man=false
+%meson -Dbash_completion=false \
+       -Dman=false \
+       -Dgtk_doc=false \
+       -Dvapi=false
+
 %meson_build
 
 %install
@@ -90,5 +91,3 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 %{_includedir}/dconf/common/*.h
 %{_libdir}/libdconf.so
 %{_libdir}/pkgconfig/*.pc
-%{_datadir}/vala/vapi/dconf.*
-%{_datadir}/bash-completion/completions/dconf
