@@ -57,12 +57,10 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 
 %post
 /sbin/ldconfig || :
-/usr/bin/gio-querymodules /usr/lib/gio/modules/ || :
 %{_bindir}/add-oneshot dconf-update || :
 
 %postun
 /sbin/ldconfig || :
-/usr/bin/gio-querymodules /usr/lib/gio/modules/ || :
 
 %files
 %defattr(-,root,root,-)
@@ -71,18 +69,22 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 %{_libdir}/libdconf.so.*
 %{_libexecdir}/dconf-service
 %{_datadir}/dbus-1/services/*
-%{_sysconfdir}/dconf/profile/user
-%{_sysconfdir}/dconf/db/nemo.d/
+%dir %{_sysconfdir}/dconf
+%dir %{_sysconfdir}/dconf/db
+%{_sysconfdir}/dconf/profile
+%{_sysconfdir}/dconf/db/nemo.d
 %ghost %{_sysconfdir}/dconf/db/nemo
-%{_sysconfdir}/dconf/db/vendor.d/
+%{_sysconfdir}/dconf/db/vendor.d
 %ghost %{_sysconfdir}/dconf/db/vendor
-%{_sysconfdir}/dconf/db/vendor-variant.d/
+%{_sysconfdir}/dconf/db/vendor-variant.d
 %ghost %{_sysconfdir}/dconf/db/vendor-variant
 %attr(755, root, root) %{_oneshotdir}/dconf-update
 
 %files devel
 %defattr(-,root,root,-)
-%dir %{_includedir}/dconf/
+%dir %{_includedir}/dconf
+%dir %{_includedir}/dconf/client
+%dir %{_includedir}/dconf/common
 %{_includedir}/dconf/*.h
 %{_includedir}/dconf/client/*.h
 %{_includedir}/dconf/common/*.h
