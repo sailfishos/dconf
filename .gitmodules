@@ -1,3 +1,3 @@
 [submodule "dconf"]
 	path = dconf
-	url = https://gitlab.gnome.org/GNOME/dconf.git
+	url = https://git.sailfishos.org/mirror/dconf.git
