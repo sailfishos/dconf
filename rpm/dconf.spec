@@ -1,6 +1,6 @@
 Name:       dconf
 Summary:    simple configuration storage system
-Version:    0.34.0
+Version:    0.36.0
 Release:    1
 License:    LGPLv2+
 URL:        https://download.gnome.org/sources/dconf/
@@ -30,7 +30,7 @@ Requires:   %{name} = %{version}-%{release}
 Development files for %{name}.
 
 %prep
-%autosetup -p1 -n %{name}-%{version}/%{name}
+%autosetup -n %{name}-%{version}/%{name}
 
 %build
 %meson -Dbash_completion=false \
@@ -65,6 +65,7 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 
 %files
 %defattr(-,root,root,-)
+%license COPYING
 %{_bindir}/dconf
 %{_libdir}/gio/modules/libdconfsettings.so
 %{_libdir}/libdconf.so.*
@@ -83,11 +84,6 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 
 %files devel
 %defattr(-,root,root,-)
-%dir %{_includedir}/dconf
-%dir %{_includedir}/dconf/client
-%dir %{_includedir}/dconf/common
-%{_includedir}/dconf/*.h
-%{_includedir}/dconf/client/*.h
-%{_includedir}/dconf/common/*.h
+%{_includedir}/dconf
 %{_libdir}/libdconf.so
-%{_libdir}/pkgconfig/*.pc
+%{_libdir}/pkgconfig/dconf.pc
