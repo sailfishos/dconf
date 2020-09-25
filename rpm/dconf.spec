@@ -1,10 +1,10 @@
 Name:       dconf
-Summary:    simple configuration storage system
-Version:    0.36.0
+Summary:    A configuration system
+Version:    0.38.0
 Release:    1
 License:    LGPLv2+
-URL:        https://download.gnome.org/sources/dconf/
-Source0:    %{name}-%{version}.tar.xz
+URL:        https://wiki.gnome.org/Projects/dconf
+Source0:    %{name}-%{version}.tar.bz2
 Source1:    user
 Source2:    dconf-update
 Requires(post): /sbin/ldconfig
@@ -19,8 +19,8 @@ BuildRequires:  meson
 Obsoletes: gconf
 
 %description
-DConf is a low-level key/value database designed for storing desktop
-environment settings.
+dconf is a low-level configuration system. Its main purpose is to provide a
+backend to the GSettings API in GLib.
 
 %package devel
 Summary:    Development files for %{name}
