@@ -1,6 +1,6 @@
 Name:       dconf
 Summary:    A configuration system
-Version:    0.38.0
+Version:    0.40.0
 Release:    1
 License:    LGPLv2+
 URL:        https://wiki.gnome.org/Projects/dconf
@@ -16,7 +16,7 @@ BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  intltool
 BuildRequires:  oneshot
 BuildRequires:  meson
-Obsoletes: gconf
+BuildRequires:  systemd
 
 %description
 dconf is a low-level configuration system. Its main purpose is to provide a
@@ -71,6 +71,7 @@ touch %{buildroot}/%{_sysconfdir}/dconf/db/vendor-variant
 %{_libdir}/libdconf.so.*
 %{_libexecdir}/dconf-service
 %{_datadir}/dbus-1/services/*
+%{_userunitdir}/dconf.service
 %dir %{_sysconfdir}/dconf
 %dir %{_sysconfdir}/dconf/db
 %{_sysconfdir}/dconf/profile
