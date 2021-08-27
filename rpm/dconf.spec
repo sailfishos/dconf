@@ -7,6 +7,7 @@ URL:        https://wiki.gnome.org/Projects/dconf
 Source0:    %{name}-%{version}.tar.bz2
 Source1:    user
 Source2:    dconf-update
+Patch1:     0001-service-Allow-D-Bus-activation-only-through-systemd.patch
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 Requires:       oneshot
@@ -30,7 +31,7 @@ Requires:   %{name} = %{version}-%{release}
 Development files for %{name}.
 
 %prep
-%autosetup -n %{name}-%{version}/%{name}
+%autosetup -p1 -n %{name}-%{version}/%{name}
 
 %build
 %meson -Dbash_completion=false \
