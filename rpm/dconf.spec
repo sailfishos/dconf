@@ -14,10 +14,10 @@ Requires:       oneshot
 Requires:       glib2 >= 2.44.0
 BuildRequires:  pkgconfig(glib-2.0) >= 2.44.0
 BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(systemd)
 BuildRequires:  intltool
 BuildRequires:  oneshot
 BuildRequires:  meson
-BuildRequires:  systemd
 
 %description
 dconf is a low-level configuration system. Its main purpose is to provide a
